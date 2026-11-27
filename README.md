@@ -1,4 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sankalpdham
+
+## Local Supabase and admin
+
+The admin dashboard is at `/admin`; sign in at `/admin/login`. The app uses the
+local Supabase stack defined in `supabase/config.jsonc`. Start it with Docker
+Desktop running:
+
+```sh
+supabase start
+supabase migration up
+supabase status
+```
+
+The current local RBAC migration creates `super_admin` and `admin` roles and
+their permissions. The bootstrap process creates a local super admin using
+`npm run seed:admin`. In this workspace, its generated password is stored in
+the ignored `.env.local` file under `ADMIN_PASSWORD`; use
+`admin@sankalpdham.local` to sign in. Do not commit or share `.env.local`.
+
+The app connects to Supabase using `NEXT_PUBLIC_SUPABASE_URL` and a public
+publishable/anon key. `SUPABASE_SERVICE_ROLE_KEY` is used only by the local
+bootstrap script and must never be exposed in a `NEXT_PUBLIC_` variable.
+Supabase Studio is available at `http://127.0.0.1:54323`.
+
+Useful local database commands:
+
+```sh
+supabase status              # inspect services and local key names
+supabase migration new name  # create a database migration
+supabase migration up        # apply pending migrations
+supabase stop                # stop local services; data is retained
+supabase db reset             # destructive: recreate the local database
+```
+
+Run the app with `npm run dev`, then open `http://localhost:3000/admin`.
 
 ## Getting Started
 
